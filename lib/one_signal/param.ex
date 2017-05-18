@@ -18,18 +18,18 @@ defmodule OneSignal.Param do
   @doc """
   Send push notification from parameters
   """
-  def notify(%Param{} = param) do
+  def notify(%Param{} = param, app_name \\ "") do
     param
-    |> build
-    |> OneSignal.Notification.send
+    |> build(app_name)
+    |> OneSignal.Notification.send(app_name)
   end
 
   @doc """
   Build notifications parameter of request
   """
-  def build(%Param{} = param) do
+  def build(%Param{} = param, app_name \\ "") do
     required = %{
-      "app_id"   => OneSignal.fetch_app_id,
+      "app_id"   => OneSignal.fetch_app_id(app_name),
       "contents" => Enum.map(param.messages, &to_string_key/1) |> Enum.into(%{})
     }
 

@@ -21,8 +21,8 @@ defmodule OneSignal do
     %OneSignal.Param{}
   end
 
-  def auth_header do
-    %{"Authorization" => "Basic " <> fetch_api_key,
+  def auth_header(app_name \\ "") do
+    %{"Authorization" => "Basic " <> fetch_api_key(app_name),
       "Content-type" => "application/json"}
   end
 
@@ -30,13 +30,22 @@ defmodule OneSignal do
     Application.get_env(:one_signal, OneSignal)
   end
 
-  defp fetch_api_key do
-    config()[:api_key] ||
-      System.get_env("ONE_SIGNAL_API_KEY")
+  defp fetch_api_key(app_name \\ "") do
+    config()[config_key(app_name, :api_key)] ||
+      System.get_env(config_name(app_name, "ONE_SIGNAL_API_KEY"))
   end
 
-  def fetch_app_id do
-    config()[:app_id] ||
-      System.get_env("ONE_SIGNAL_APP_ID")
+  def fetch_app_id(app_name \\ "") do
+    IO.inspect config()
+    IO.puts config_key("flow_app", :app_id)
+    config()[config_key(app_name, :app_id)] ||
+      System.get_env(config_name(app_name, "ONE_SIGNAL_APP_ID"))
   end
+
+  defp config_key("", key), do: key
+  defp config_key(app_name, key), do: "#{app_name}_#{key}" |> String.to_atom
+
+  defp config_name("", name), do: name
+  defp config_name(app_name, name), do: "#{app_name}_#{name}" |> String.upcase
+
 end
