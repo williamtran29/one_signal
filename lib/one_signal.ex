@@ -36,8 +36,6 @@ defmodule OneSignal do
   end
 
   def fetch_app_id(app_name \\ "") do
-    IO.inspect config()
-    IO.puts config_key("flow_app", :app_id)
     config()[config_key(app_name, :app_id)] ||
       System.get_env(config_name(app_name, "ONE_SIGNAL_APP_ID"))
   end

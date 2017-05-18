@@ -185,8 +185,8 @@ defmodule OneSignal.Param do
     %{param | data: Map.put(data, key, value)}
   end
 
-  def put_data(%Param{data: data} = param, %{} = data) do
-    Enum.each(data, fn({key, value}) -> put_data(param, key, value) end)
+  def put_data(%Param{} = param, %{} = data) do
+    Enum.reduce(data, param, fn({key, value}, p) -> put_data(p, key, value) end)
   end
 
 end
