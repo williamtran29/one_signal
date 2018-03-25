@@ -145,17 +145,18 @@ defmodule OneSignal.Param do
   @doc """
   Put iOS Badge
   """
-  def put_badge_type(%Param{ios_badgeType: nil} = param, badge_type) do
+  def put_badge_type(%Param{} = param, badge_type) do
     IO.puts "ios_badgeType"
     IO.inspect badge_type
+    IO.inspect param    
     %{param | ios_badgeType: [badge_type]}
-    IO.inspect param
   end
-  def put_badge_count(%Param{ios_badgeCount: nil} = param, badge_count) do
+  
+  def put_badge_count(%Param{} = param, badge_count) do
     IO.puts "ios_badgeCount"
     IO.inspect badge_count
+    IO.inspect param    
     %{param | ios_badgeCount: [badge_count]}
-    IO.inspect param
   end
   
   @doc """
