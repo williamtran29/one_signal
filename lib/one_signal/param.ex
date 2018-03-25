@@ -141,7 +141,17 @@ defmodule OneSignal.Param do
   def exclude_segments(%Param{} = param, segs) do
     Enum.reduce(segs, param, fn next, acc -> exclude_segment(acc, next) end)
   end
-
+  
+  @doc """
+  Put iOS Badge
+  """
+  def put_badge_type(%Param{} = param, badge_type) do
+    %{param | ios_badgeType: [badge_type]}
+  end
+  def put_badge_count(%Param{} = param, badge_count) do
+    %{param | ios_badgeCount: [badge_count]}
+  end
+  
   @doc """
   Put player id
   """
